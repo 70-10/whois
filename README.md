@@ -1,77 +1,94 @@
 # WHOIS Client
 
-A lightweight TypeScript WHOIS client implementation running on Bun runtime. This client allows you to query WHOIS information for IP addresses with automatic handling of referral servers.
+A simple and reusable WHOIS client library implemented in TypeScript.
 
 ## Features
 
-- Simple command-line interface for IP address lookups
-- Automatic handling of WHOIS referral servers
-- Built with TypeScript for type safety
-- Runs on fast Bun runtime
-- Proper error handling
-
-## Prerequisites
-
-- [Bun](https://bun.sh) installed on your system
+- ✨ Simple to use
+- 🔄 Automatic referral server tracking
+- ⏱️ Timeout handling
+- 🛡️ Type safety
+- 🧪 Comprehensive testing
 
 ## Installation
 
 ```bash
-# Clone the repository
-git clone https://github.com/70-10/whois.git
-cd whois
-
-# Install dependencies
 bun install
 ```
 
 ## Usage
 
-Query WHOIS information for an IP address:
+### As a CLI Tool
 
 ```bash
-bun run index.ts <ip-address>
+bun run src/index.ts 8.8.8.8
 ```
 
-If no IP address is provided, it defaults to 8.8.8.8:
+### As a Library
 
-```bash
-bun run index.ts
+```typescript
+import { WhoisClient } from "./whois-client";
+
+const client = new WhoisClient({
+  timeout: 5000 // Optional: Timeout in milliseconds
+});
+
+try {
+  const result = await client.lookup("8.8.8.8");
+  console.log(result);
+} catch (error) {
+  console.error("Error occurred:", error);
+}
 ```
 
-### Example
+## API
 
-```bash
-bun run index.ts 8.8.8.8
+### WhoisClient
+
+#### Constructor
+
+```typescript
+new WhoisClient(config?: WhoisConfig)
 ```
 
-## How it Works
+Configuration options:
+- `timeout`: Query timeout in milliseconds, default: 5000
 
-1. The client first queries the IANA WHOIS server (whois.iana.org)
-2. If a referral server is specified in the response, it automatically queries that server
-3. The final WHOIS information is displayed on the console
+#### Methods
 
-## Error Handling
+##### lookup(ip: string): Promise<string>
 
-The client handles various error cases:
-- Network connection issues
-- Invalid responses from WHOIS servers
-- Server timeouts
-- General error conditions
+Retrieves WHOIS information for the specified IP address.
+Automatically follows referral servers if necessary.
+
+```typescript
+const result = await client.lookup("8.8.8.8");
+```
 
 ## Development
 
+### Running Tests
+
 ```bash
-# Install dependencies
-bun install
-
-# Run TypeScript compiler
-bun run tsc
-
-# Run the client
-bun run index.ts
+bun test
 ```
+
+## Error Handling
+
+The client throws errors in the following cases:
+
+- Network errors
+- Timeouts
+- Invalid responses
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+MIT
+
+## Contributing
+
+1. Fork this repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Create a Pull Request

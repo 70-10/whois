@@ -1,33 +1,33 @@
-# Product Context
+# WHOIS Client Library
 
-## Problem Statement
-Network administrators and developers need a simple, reliable way to query WHOIS information for IP addresses. While there are many WHOIS clients available, a lightweight TypeScript implementation that handles referral servers properly fills a specific niche.
+## Project Purpose
+- Query IP address information using the WHOIS protocol
+- Provide a reusable TypeScript library
+- Implement robust error handling
 
-## Solution
-A command-line WHOIS client that:
-- Provides straightforward IP address lookups
-- Automatically handles referral servers
-- Offers clear error messages
-- Runs efficiently on the Bun runtime
+## Use Cases
+1. IP address information lookup
+2. Automatic referral server tracking
+3. CLI tool usage
+4. Library usage in other projects
 
-## User Experience Goals
-1. Simple Command Interface
-   - Single argument for IP address input
-   - Default IP (8.8.8.8) for testing
-   - Clear output format
+## Operation Flow
+1. Initial query to IANA WHOIS server
+2. Follow-up query to referral server if exists
+3. Retrieve and display final information
 
-2. Reliability
-   - Proper error handling
-   - Automatic referral server handling
-   - Timeout handling for unresponsive servers
+## Core Features
+1. WHOIS Protocol Implementation
+   - Port 43 communication
+   - CRLF-terminated queries
+   - Plain text response handling
 
-3. Performance
-   - Quick response times
-   - Efficient memory usage
-   - Lightweight deployment
+2. Network Operations
+   - Timeout handling
+   - Error management
+   - Asynchronous processing
 
-## Target Users
-- Network administrators
-- Developers
-- System administrators
-- Security researchers
+3. Client Interface
+   - Simple API
+   - Type-safe operations
+   - Configurable options

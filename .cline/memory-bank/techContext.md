@@ -1,48 +1,62 @@
 # Technical Context
 
-## Technology Stack
-1. TypeScript
-   - Static typing for robust code
-   - Modern ECMAScript features
-   - Type definitions for better IDE support
-
-2. Bun Runtime
-   - Fast execution
-   - Built-in TypeScript support
-   - Modern JavaScript features
-
-3. Node.js Net Module
-   - TCP connection handling
-   - Event-based networking
-   - Buffer management
-
 ## Development Environment
-- VSCode as primary IDE
-- Bun for package management
-- TypeScript compiler configuration
+- TypeScript/Node.js
+- Bun Runtime
+- Bun Test Framework
 
-## Dependencies
-- @types/bun: Type definitions for Bun runtime
-- typescript: Peer dependency for TypeScript support
+## Key Dependencies
+- node:net module (WHOIS protocol communication)
+- TypeScript (type system)
+- Bun (runtime and testing)
+
+## Project Structure
+```
+src/
+  ├── whois-client.ts   # WHOIS client implementation
+  └── index.ts          # CLI entry point
+
+tests/
+  └── unit/
+      └── whois-client.test.ts
+```
 
 ## Technical Constraints
-1. Network
-   - WHOIS protocol limitations
-   - Server response variations
-   - Network timeout considerations
 
-2. Runtime
-   - Bun compatibility requirements
-   - TypeScript compilation settings
-   - Node.js net module compatibility
+### 1. WHOIS Protocol
+- Port 43 communication
+- CRLF-terminated queries
+- Plain text responses
+- Server-specific response formats
 
-## Configuration Files
-1. tsconfig.json
-   - TypeScript compilation options
-   - Module system configuration
-   - Type checking rules
+### 2. Network Communication
+- Required timeout handling
+- Error handling importance
+- Asynchronous operation management
+- Connection cleanup requirements
 
-2. package.json
-   - Project metadata
-   - Dependencies
-   - Module configuration
+### 3. Testing Environment
+- Network mocking necessity
+- Asynchronous test control
+- Coverage requirements
+- Edge case testing
+
+## Technical Decisions
+
+### 1. TypeScript Usage
+- Strong typing for API
+- Interface definitions
+- Error type definitions
+- Configuration type safety
+
+### 2. Testing Strategy
+- Unit tests with mocks
+- Asynchronous test patterns
+- Comprehensive test coverage
+- Error case validation
+
+### 3. Error Handling
+- Promise-based error propagation
+- Timeout management
+- Network error handling
+- Clear error messages
