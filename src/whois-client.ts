@@ -1,4 +1,4 @@
-import { createConnection } from "node:net";
+import { createConnection, isIPv4, isIPv6 } from "node:net";
 
 export interface WhoisConfig {
     timeout?: number;
@@ -65,10 +65,18 @@ export class WhoisClient {
         let response = await this.queryServer("whois.iana.org", ip);
 
         // If the response contains a reference server, query that server again
-        const referMatch = response.match(/refer:\s*(\S+)/i);
-        if (referMatch) {
-            const referServer = referMatch[1].trim();
-            response = await this.queryServer(referServer, ip);
+        if (isIPv6(ip)) {
+            const whoisMatch = response.match(/whois:\s*(\S+)/i);
+            if (whoisMatch) {
+                return await this.queryServer(whoisMatch[1].trim(), ip);
+            }
+        }
+        if (isIPv4(ip)) {
+            const referMatch = response.match(/refer:\s*(\S+)/i);
+            if (referMatch) {
+                const referServer = referMatch[1].trim();
+                return await this.queryServer(referServer, ip);
+            }
         }
 
         return response;
